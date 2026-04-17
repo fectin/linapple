@@ -190,7 +190,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | directories resources
 # Asset conversion (PNG to XPM)
 $(OBJDIR)/%.xpm: $(RESDIR)/%.png | directories
 	@echo "  XPM     $<"
-	$(Q)magick "$<" -layers flatten "$@"
+	$(Q)convert -flatten "$<" "$@"
 	$(Q)sed -i 's/static const char/static char/g' "$@"
 	$(Q)sed -i 's/$(notdir $(basename $@))\[\]/$(notdir $(basename $@))_xpm[]/g' "$@"
 
