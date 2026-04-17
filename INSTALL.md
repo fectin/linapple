@@ -5,7 +5,7 @@
 #### Debian / Ubuntu / RetroPie
 
 ```bash
-sudo apt-get install git libzip-dev libsdl1.2-dev libsdl-image1.2-dev libcurl4-openssl-dev zlib1g-dev imagemagick
+sudo apt-get install git build-essential libzip-dev libsdl1.2-dev libsdl-image1.2-dev libcurl4-openssl-dev zlib1g-dev imagemagick
 ```
 
 #### Fedora / RHEL / CentOS
