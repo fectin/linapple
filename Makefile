@@ -188,11 +188,18 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | directories resources
 	$(Q)$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
 
 # Asset conversion (PNG to XPM)
+# Auto-detect ImageMagick: prefer 'magick' (v7+), fallback to 'convert' (v6)
+ifeq ($(USE_OLD_MAGIC),1)
+  MAGIC_CMD := convert
+else
+  MAGIC_CMD := $(shell command -v magick 2>/dev/null || echo convert)
+endif
+
 $(OBJDIR)/%.xpm: $(RESDIR)/%.png | directories
 	@echo "  XPM     $<"
-	$(Q)convert -flatten "$<" "$@"
-	$(Q)sed -i 's/static const char/static char/g' "$@"
-	$(Q)sed -i 's/$(notdir $(basename $@))\[\]/$(notdir $(basename $@))_xpm[]/g' "$@"
+	$(Q)$(MAGIC_CMD) $< $@
+	$(Q)sed -i 's/static const char/static char/g' $@
+	$(Q)sed -i 's/$(notdir $(basename $@))\[\]/$(notdir $(basename $@))_xpm[]/g' $@
 
 
 $(BINDIR)/%.SYM: $(RESDIR)/%.SYM | directories
